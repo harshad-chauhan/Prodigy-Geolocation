@@ -1,0 +1,42 @@
+<aura:component controller= "CheckInController" implements="force:lightningQuickAction,force:hasRecordId">
+    <aura:attribute name="isDisabled" type="boolean" default="True" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="lat" type="String" />
+    <aura:attribute name="lng" type="String" />
+    <aura:attribute name="show" type="Boolean" default="true" />
+    <aura:handler  name="init" value="{!this}" action="{!c.doinit}"/>
+    <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+
+     <div  >
+        <lightning:recordEditForm objectApiName="GeoLocation__c" onsubmit="{!c.CheckIn}" >
+            <lightning:messages />
+            <lightning:inputField fieldName="Person_Name__c" Label="Name"  />
+            <lightning:inputField fieldName="Purpose_Discussion_of_Visit__c" Label="Purpose of Visit"/>
+            <lightning:inputField fieldName="Designation_of_Person__c" Label="Designation of Person"/>
+            <lightning:inputField fieldName="Comment__c" Label="Comment"/>
+           
+            <div class="slds-align_absolute-center">
+            <lightning:button variant="brand" type="submit" name="Submit" label="Check In" class="slds-var-m-top_medium" disabled="{!v.isDisabled}"/>
+
+            
+            </div>
+            <br></br>
+            <br></br>
+            <aura:if isTrue="{!v.show}">
+                <div aura:id="myDiv" class="slds-align_absolute-center" style="color:red;font-size: 12px;">
+                    <p><b>* Please Enable Your Location</b></p>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+            </aura:if>
+        </lightning:recordEditForm>
+    </div>
+
+</aura:component>
